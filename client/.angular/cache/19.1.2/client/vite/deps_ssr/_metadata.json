@@ -1,0 +1,73 @@
+{
+  "hash": "7ea5aa21",
+  "configHash": "2f5de3b8",
+  "lockfileHash": "360c0ff6",
+  "browserHash": "f86cc0f5",
+  "optimized": {
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "98b8d29b",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "73631642",
+      "needsInterop": false
+    },
+    "@angular/platform-server": {
+      "src": "../../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
+      "file": "@angular_platform-server.js",
+      "fileHash": "2e68168b",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "c671a5bf",
+      "needsInterop": false
+    },
+    "@angular/ssr": {
+      "src": "../../../../../../node_modules/@angular/ssr/fesm2022/ssr.mjs",
+      "file": "@angular_ssr.js",
+      "fileHash": "8bdf9b0e",
+      "needsInterop": false
+    },
+    "@angular/ssr/node": {
+      "src": "../../../../../../node_modules/@angular/ssr/fesm2022/node.mjs",
+      "file": "@angular_ssr_node.js",
+      "fileHash": "028c4911",
+      "needsInterop": false
+    },
+    "express": {
+      "src": "../../../../../../node_modules/express/index.js",
+      "file": "express.js",
+      "fileHash": "6dc74d50",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-U6KSHJOV": {
+      "file": "chunk-U6KSHJOV.js"
+    },
+    "chunk-AIB6S2J5": {
+      "file": "chunk-AIB6S2J5.js"
+    },
+    "chunk-IEFODQQN": {
+      "file": "chunk-IEFODQQN.js"
+    },
+    "chunk-WDFHDVNC": {
+      "file": "chunk-WDFHDVNC.js"
+    },
+    "chunk-2EWNKAHN": {
+      "file": "chunk-2EWNKAHN.js"
+    },
+    "xhr2-TXIMV6CV": {
+      "file": "xhr2-TXIMV6CV.js"
+    },
+    "chunk-YHCV7DAQ": {
+      "file": "chunk-YHCV7DAQ.js"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<!-- Gallery View -->
+<div *ngIf="!selectedImage">
+    <h1>Your Gallery</h1>
+  
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <input type="file" (change)="onFileSelected($event)" />
+      <button (click)="onUpload()">Upload</button>
+    </div>
+  
+    <!-- Image Gallery -->
+    <div class="gallery">
+      <div *ngFor="let image of images" class="gallery-item">
+        <img [src]="image.url" [alt]="image.filename" />
+        <p>{{ image.filename }}</p>
+        <div class="actions">
+          <button (click)="onRename(image)">Rename</button>
+          <button (click)="onDelete(image)">Delete</button>
+          <button (click)="openImage(image)">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Detailed Image View -->
+  <div *ngIf="selectedImage" class="image-viewer">
+    <button (click)="closeImage()">Back to Gallery</button>
+    <h2>{{ selectedImage.filename }}</h2>
+  
+    <!-- Image Editor -->
+    <div class="canvas-container">
+      <canvas #canvas></canvas>
+    </div>
+  
+    <!-- Editing Tools -->
+    <div class="tools">
+      <button (click)="setBrush()">Brush</button>
+      <button (click)="setEraser()">Eraser</button>
+      <button (click)="applyTransparency()">Apply Transparency</button>
+    </div>
+  </div>
+  
