@@ -16,7 +16,8 @@
         <div class="actions">
           <button (click)="onRename(image)">Rename</button>
           <button (click)="onDelete(image)">Delete</button>
-          <button (click)="openImage(image)">Edit</button>
+          <button [routerLink]="['/edit']" [queryParams]="{ filename: image.filename, url: image.url }">Edit</button>
+
         </div>
       </div>
     </div>
@@ -26,17 +27,6 @@
   <div *ngIf="selectedImage" class="image-viewer">
     <button (click)="closeImage()">Back to Gallery</button>
     <h2>{{ selectedImage.filename }}</h2>
-  
-    <!-- Image Editor -->
-    <div class="canvas-container">
-      <canvas #canvas></canvas>
-    </div>
-  
-    <!-- Editing Tools -->
-    <div class="tools">
-      <button (click)="setBrush()">Brush</button>
-      <button (click)="setEraser()">Eraser</button>
-      <button (click)="applyTransparency()">Apply Transparency</button>
-    </div>
+
   </div>
   

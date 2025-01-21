@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../shared/services/auth.service';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 
 interface Image {
   filename: string;
@@ -12,7 +13,7 @@ interface Image {
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css'],
 })

@@ -1,0 +1,18 @@
+<div *ngIf="imageUrl">
+    <div class="header">
+      <h1 class="image-title">Edit Image: {{ imageFilename }}</h1>
+      <button [routerLink]="['/gallery']" class="back-button">Back to Gallery</button>
+    </div>
+  
+    <div class="image-container">
+      <img [src]="imageUrl" alt="Image to edit" class="responsive-image" />
+    </div>
+  
+    <!-- Narzędzia do edycji -->
+    <div class="tools">
+      <button>Brush</button>
+      <button>Eraser</button>
+      <button>Apply Transparency</button>
+    </div>
+  </div>
+  

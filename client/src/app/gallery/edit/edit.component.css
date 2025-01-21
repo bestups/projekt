@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  height: 100vh; /* Ustaw wysokość całego widoku na 100% ekranu */
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie */
+  align-items: center; /* Wyrównanie w pionie */
+  gap: 20px; /* Odległość między tytułem a przyciskiem */
+  margin-bottom: 16px; /* Dystans od reszty sekcji */
+}
+
+.image-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.back-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 150px); /* Dopasowanie do dostępnej wysokości */
+  overflow: hidden;
+}
+
+.responsive-image {
+  max-width: 100%; /* Dostosowanie do szerokości okna */
+  max-height: 100%; /* Dostosowanie do wysokości okna */
+  object-fit: contain; /* Zachowanie proporcji obrazu */
+}
+
+.tools {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.tools button {
+  margin: 0 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
