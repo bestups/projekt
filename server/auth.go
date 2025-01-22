@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -14,7 +15,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, user := range users {
 		if user.Username == req.Username && user.Password == req.Password {
-			token := "mock-token-for-" + user.ID
+			// Token zawierający userID
+			token := fmt.Sprintf("user-%s", user.ID)
 			json.NewEncoder(w).Encode(LoginResponse{
 				Success: true,
 				Message: "Login successful",

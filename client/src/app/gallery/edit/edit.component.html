@@ -19,6 +19,18 @@
   </div>
   
   <div class="tools">
-    <button class="apply-mask-btn" (click)="applyBodyPix()">Apply AI Mask</button>
+    <button
+      class="apply-mask-btn"
+      [disabled]="!imageUrl || !ctx || maskApplied"
+      (click)="applyBodyPix()"
+    >
+      Apply AI Mask
+    </button>
+    <button
+      class="apply-mask-btn"
+      [disabled]="!maskApplied"
+      (click)="onSave()"
+    >
+      Save Edited Image
+    </button>
   </div>
-  

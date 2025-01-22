@@ -5,6 +5,8 @@ import '@tensorflow/tfjs-backend-webgl';
 import * as bodyPix from '@tensorflow-models/body-pix';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-edit',
@@ -16,20 +18,26 @@ import { RouterModule } from '@angular/router';
 export class EditComponent implements OnInit {
   imageUrl: string | null = null;
   imageFilename: string | null = null;
+  editedImage: string | null = null;
+  maskApplied = false; // Flaga kontrolująca zastosowanie maski
 
   @ViewChild('canvas', { static: false }) canvas!: ElementRef<HTMLCanvasElement>;
 
-  private ctx!: CanvasRenderingContext2D;
+  protected  ctx!: CanvasRenderingContext2D;
   private net!: bodyPix.BodyPix;
 
-  canvasWidth!: number; // Dynamiczna szerokość płótna
-  canvasHeight!: number; // Dynamiczna wysokość płótna
-  windowWidth!: number; // Szerokość okna
-  windowHeight!: number; // Wysokość okna
-  backButtonPosition = { left: 0 }; // Pozycja przycisku "Back to Gallery"
-  fileNamePosition = { right: 0 }; // Pozycja nazwy pliku
+  canvasWidth!: number;
+  canvasHeight!: number;
+  windowWidth!: number;
+  windowHeight!: number;
+  backButtonPosition = { left: 0 };
+  fileNamePosition = { right: 0 };
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.configureBackend();
@@ -46,22 +54,6 @@ export class EditComponent implements OnInit {
 
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions.bind(this));
-  }
-
-  private updateWindowDimensions(): void {
-    this.windowWidth = window.innerWidth;
-    this.windowHeight = window.innerHeight;
-    this.updateDynamicPositions();
-  }
-
-  private updateDynamicPositions(): void {
-    if (this.canvasWidth && this.canvasHeight) {
-      const leftOffset = (this.windowWidth - this.canvasWidth) / 2;
-      this.backButtonPosition.left = Math.max(leftOffset - (this.canvasWidth*0.05), 10);
-
-      const rightOffset = (this.windowWidth - this.canvasWidth) / 2;
-      this.fileNamePosition.right = Math.max(rightOffset - (this.canvasWidth*0.05), 10);
-    }
   }
 
   private async configureBackend(): Promise<void> {
@@ -110,6 +102,7 @@ export class EditComponent implements OnInit {
       this.canvasHeight = height;
 
       this.updateDynamicPositions();
+      this.editedImage = canvas.toDataURL('image/png');
     };
   }
 
@@ -122,6 +115,22 @@ export class EditComponent implements OnInit {
       width: Math.round(imageWidth * scale),
       height: Math.round(imageHeight * scale),
     };
+  }
+
+  private updateWindowDimensions(): void {
+    this.windowWidth = window.innerWidth;
+    this.windowHeight = window.innerHeight;
+    this.updateDynamicPositions();
+  }
+
+  private updateDynamicPositions(): void {
+    if (this.canvasWidth && this.canvasHeight) {
+      const leftOffset = (this.windowWidth - this.canvasWidth) / 2;
+      this.backButtonPosition.left = Math.max(leftOffset - this.canvasWidth * 0.05, 10);
+
+      const rightOffset = (this.windowWidth - this.canvasWidth) / 2;
+      this.fileNamePosition.right = Math.max(rightOffset - this.canvasWidth * 0.05, 10);
+    }
   }
 
   async applyBodyPix(): Promise<void> {
@@ -155,6 +164,48 @@ export class EditComponent implements OnInit {
     }
 
     ctx.putImageData(imageData, 0, 0);
+
+    this.editedImage = canvas.toDataURL('image/png');
+    this.maskApplied = true; // Zastosowanie maski
     console.log('AI mask applied.');
+  }
+
+  onSave(): void {
+    if (!this.editedImage || !this.imageFilename || !this.maskApplied) {
+      console.error('Maska nie została zastosowana lub brak obrazu do zapisania.');
+      return;
+    }
+
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      this.authService.getToken() || ''
+    );
+
+    const blob = this.base64ToBlob(this.editedImage);
+    const formData = new FormData();
+    formData.append('image', blob, this.imageFilename);
+
+    this.http
+      .post('http://localhost:8000/api/save-edited-image', formData, { headers })
+      .subscribe(
+        () => {
+          console.log('Obraz zapisany pomyślnie');
+        },
+        (error) => {
+          console.error('Błąd podczas zapisywania obrazu:', error);
+        }
+      );
+  }
+
+  private base64ToBlob(base64: string): Blob {
+    const byteString = atob(base64.split(',')[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uintArray = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uintArray[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([uintArray], { type: 'image/png' });
   }
 }

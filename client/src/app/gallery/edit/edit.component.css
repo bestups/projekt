@@ -50,24 +50,31 @@ canvas {
 
 .tools {
   position: fixed;
-  bottom: 20px; /* Ustawienie przycisku na dole */
-  width: 100%; /* Rozciągnięcie kontenera na całą szerokość */
+  bottom: 20px;
+  width: 100%;
   display: flex;
-  justify-content: center; /* Wyśrodkowanie przycisku */
+  justify-content: center;
+  gap: 20px; /* Odstęp między przyciskami */
 }
 
+/* Styl przycisków narzędzi */
 .apply-mask-btn {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
   color: white;
-  background-color: #28a745; /* Zielony kolor */
+  background-color: #28a745;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.apply-mask-btn:hover {
-  background-color: #218838; /* Ciemniejszy zielony na hover */
+.apply-mask-btn:disabled {
+  background-color: #6c757d; /* Szary kolor dla przycisku wyłączonego */
+  cursor: not-allowed;
+}
+
+.apply-mask-btn:hover:not(:disabled) {
+  background-color: #218838;
 }
