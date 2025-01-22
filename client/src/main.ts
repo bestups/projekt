@@ -9,8 +9,8 @@ import { EditComponent } from './app/gallery/edit/edit.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'gallery', component: GalleryComponent }, // Add gallery route
-  { path: 'edit', component: EditComponent } // Nowa trasa
+  { path: 'gallery', component: GalleryComponent },
+  { path: 'edit', component: EditComponent }, // Trasa do edycji
 ];
 
 bootstrapApplication(AppComponent, {

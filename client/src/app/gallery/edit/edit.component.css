@@ -1,62 +1,73 @@
-:host {
-  display: block;
-  height: 100vh; /* Ustaw wysokość całego widoku na 100% ekranu */
-  margin: 0;
-  padding: 0;
-}
-
 .header {
+  position: relative;
+  width: 100%;
+  height: 0px;
   display: flex;
-  justify-content: center; /* Wyśrodkowanie */
-  align-items: center; /* Wyrównanie w pionie */
-  gap: 20px; /* Odległość między tytułem a przyciskiem */
-  margin-bottom: 16px; /* Dystans od reszty sekcji */
-}
-
-.image-title {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin: 0;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #3576b8;
+  padding: 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .back-button {
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
+  position: absolute;
+  top: 10px;
   background-color: #007bff;
+  font-weight: bold;
   color: white;
   border: none;
   border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
-.back-button:hover {
-  background-color: #0056b3;
+.file-name {
+  position: absolute;
+  top: 0px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #414040;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 .image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 150px); /* Dopasowanie do dostępnej wysokości */
-  overflow: hidden;
+  height: calc(100vh - 10px); /* Odjęcie miejsca na nagłówek */
 }
 
-.responsive-image {
-  max-width: 100%; /* Dostosowanie do szerokości okna */
-  max-height: 100%; /* Dostosowanie do wysokości okna */
-  object-fit: contain; /* Zachowanie proporcji obrazu */
+canvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .tools {
+  position: fixed;
+  bottom: 20px; /* Ustawienie przycisku na dole */
+  width: 100%; /* Rozciągnięcie kontenera na całą szerokość */
   display: flex;
-  justify-content: center;
-  margin-top: 16px;
+  justify-content: center; /* Wyśrodkowanie przycisku */
 }
 
-.tools button {
-  margin: 0 8px;
-  padding: 8px 16px;
-  font-size: 14px;
+.apply-mask-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #28a745; /* Zielony kolor */
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.apply-mask-btn:hover {
+  background-color: #218838; /* Ciemniejszy zielony na hover */
 }

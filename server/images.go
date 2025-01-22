@@ -10,6 +10,7 @@ import (
 )
 
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	r.ParseMultipartForm(10 << 20)
 	file, handler, err := r.FormFile("image")
 	if err != nil {

@@ -1,18 +1,24 @@
-<div *ngIf="imageUrl">
-    <div class="header">
-      <h1 class="image-title">Edit Image: {{ imageFilename }}</h1>
-      <button [routerLink]="['/gallery']" class="back-button">Back to Gallery</button>
-    </div>
+<div class="header">
+    <button
+      class="back-button"
+      [routerLink]="'/gallery'"
+      [ngStyle]="{ left: backButtonPosition.left + 'px' }"
+    >
+      Back to Gallery
+    </button>
+    <h1
+      class="file-name"
+      [ngStyle]="{ right: fileNamePosition.right + 'px' }"
+    >
+      Image: {{ imageFilename }}
+    </h1>
+  </div>
   
-    <div class="image-container">
-      <img [src]="imageUrl" alt="Image to edit" class="responsive-image" />
-    </div>
+  <div class="image-container">
+    <canvas #canvas></canvas>
+  </div>
   
-    <!-- Narzędzia do edycji -->
-    <div class="tools">
-      <button>Brush</button>
-      <button>Eraser</button>
-      <button>Apply Transparency</button>
-    </div>
+  <div class="tools">
+    <button class="apply-mask-btn" (click)="applyBodyPix()">Apply AI Mask</button>
   </div>
   
