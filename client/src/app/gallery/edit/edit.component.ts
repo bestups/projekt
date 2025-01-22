@@ -1,10 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-backend-webgl';
 import * as bodyPix from '@tensorflow-models/body-pix';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute  } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../shared/services/auth.service';
 
@@ -36,7 +35,8 @@ export class EditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -208,4 +208,25 @@ export class EditComponent implements OnInit {
 
     return new Blob([uintArray], { type: 'image/png' });
   }
+
+
+  navigateToApplyBackground(): void {
+    if (!this.editedImage || !this.imageFilename) {
+      console.error('Brak obrazu lub nazwy pliku do przekazania.');
+      return;
+    }
+  
+    const token = this.authService.getToken(); // Pobierz token z AuthService
+  
+    this.router.navigate(['/applybackground'], {
+      queryParams: {
+        image: this.editedImage,       // Base64 obrazu
+        filename: this.imageFilename, // Nazwa pliku
+        token: token                  // Token użytkownika
+      }
+    });
+  }
+  
+  
+
 }

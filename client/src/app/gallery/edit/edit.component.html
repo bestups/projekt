@@ -33,4 +33,8 @@
     >
       Save Edited Image
     </button>
+    <button 
+    class="apply-mask-btn"
+    [disabled]="!maskApplied"
+    (click)="navigateToApplyBackground()">Go to Apply Background</button>
   </div>

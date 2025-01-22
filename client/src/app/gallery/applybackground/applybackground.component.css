@@ -1,0 +1,66 @@
+.background-selector {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .background-preview {
+    width: 20%; /* Każda miniatura zajmuje 20% szerokości ekranu */
+    height: auto; /* Automatyczna wysokość, aby zachować proporcje */
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    object-fit: cover; /* Dopasowanie zawartości obrazu */
+  }
+  
+  .background-list {
+    display: flex;
+    justify-content: space-around; /* Równomierne rozmieszczenie miniatur */
+    gap: 10px; /* Odstęp między miniaturami */
+    margin-top: 10px;
+  }
+  
+  
+  .background-preview:hover {
+    border-color: #007bff;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: calc(100vh - 200px); /* Dopasowanie wysokości do ekranu, odejmując inne elementy */
+  }
+  
+  canvas {
+    border: 1px solid #ccc;
+    width: auto; /* Zachowanie proporcji obrazu */
+    height: 100%; /* Dopasowanie do wysokości kontenera */
+    max-width: 100%; /* Zapobieganie wyjściu poza ekran */
+  }
+  
+  
+  .image-info {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .tools {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .save-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .save-button:hover {
+    background-color: #0056b3;
+  }
+  

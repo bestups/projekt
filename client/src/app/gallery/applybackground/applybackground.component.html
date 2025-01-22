@@ -1,0 +1,25 @@
+<div class="background-selector">
+    <div class="background-list">
+      <img
+        *ngFor="let bg of availableBackgrounds"
+        [src]="bg"
+        alt="Background"
+        class="background-preview"
+        (click)="applyBackground(bg)"
+      />
+    </div>
+  </div>
+  
+  <div class="image-container">
+    <canvas #canvas></canvas>
+  </div>
+  
+  <div class="image-info">
+    <p><strong>Nazwa pliku:</strong> {{ imageFilename }}</p>
+    <p><strong>Token:</strong> {{ token }}</p>
+  </div>
+  
+  <div class="tools">
+    <button class="save-button" (click)="onSave()">Save Image</button>
+  </div>
+  
