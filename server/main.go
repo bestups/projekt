@@ -30,6 +30,7 @@ func main() {
 	r.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("uploads"))))
 	r.HandleFunc("/api/backgrounds", getBackgroundsHandler).Methods("GET")
+	r.HandleFunc("/api/register", RegisterHandler).Methods("POST")
 
 	// Konfiguracja CORS
 	corsHandler := cors.AllowAll().Handler(r)

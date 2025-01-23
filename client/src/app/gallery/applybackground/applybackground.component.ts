@@ -2,11 +2,12 @@ import { Component, ElementRef, ViewChild, OnInit, AfterViewInit } from '@angula
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 
 @Component({
   selector: 'app-applybackground',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './applybackground.component.html',
   styleUrls: ['./applybackground.component.css'],
 })

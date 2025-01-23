@@ -224,4 +224,12 @@ export class GalleryComponent implements AfterViewInit {
     this.drawing = false;
     this.ctx.closePath();
   }
+
+  onLogout(): void {
+    this.authService.logout(); // Wywołanie metody logout z serwisu AuthService
+    window.location.href = '/'; // Przekierowanie na stronę logowania
+  }
+  
+
+
 }

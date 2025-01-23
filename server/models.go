@@ -26,9 +26,3 @@ type Image struct {
 	URL      string `json:"url"`
 	UserID   string `json:"userId"`
 }
-
-// Mock user data (replace this with database logic in production)
-var users = []User{
-	{ID: "1", Username: "admin", Password: "123"},
-	{ID: "2", Username: "user", Password: "user123"},
-}

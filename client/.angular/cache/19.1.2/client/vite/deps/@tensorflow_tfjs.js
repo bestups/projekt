@@ -1,4 +1,12 @@
 import {
+  GraphModel,
+  deregisterOp,
+  loadGraphModel,
+  loadGraphModelSync,
+  registerOp,
+  version as version2
+} from "./chunk-6PSVXF3U.js";
+import {
   GPGPUContext,
   MathBackendWebGL,
   absConfig,
@@ -81,14 +89,6 @@ import {
   webgl_util_exports,
   zeros as zeros2
 } from "./chunk-HOZCUYRT.js";
-import {
-  GraphModel,
-  deregisterOp,
-  loadGraphModel,
-  loadGraphModelSync,
-  registerOp,
-  version as version2
-} from "./chunk-6PSVXF3U.js";
 import {
   Abs,
   Acos,

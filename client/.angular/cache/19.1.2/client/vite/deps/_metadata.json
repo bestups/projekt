@@ -1,67 +1,73 @@
 {
-  "hash": "cfc36ee7",
+  "hash": "fc76ca62",
   "configHash": "bc745614",
-  "lockfileHash": "360c0ff6",
-  "browserHash": "5ca2c45f",
+  "lockfileHash": "9b8c8564",
+  "browserHash": "1d389e44",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "e9237e2a",
+      "fileHash": "0683de1c",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "17897e48",
+      "fileHash": "be992959",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "ae0bd92c",
+      "fileHash": "d19cac60",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "38449b86",
+      "fileHash": "97449f4d",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "2e936cc3",
+      "fileHash": "40d91008",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "3cbfd237",
+      "fileHash": "a4f67282",
       "needsInterop": false
     },
     "@tensorflow-models/body-pix": {
       "src": "../../../../../../node_modules/@tensorflow-models/body-pix/dist/body-pix.esm.js",
       "file": "@tensorflow-models_body-pix.js",
-      "fileHash": "09613ac4",
+      "fileHash": "d2cb24ad",
       "needsInterop": false
     },
     "@tensorflow/tfjs": {
       "src": "../../../../../../node_modules/@tensorflow/tfjs/dist/index.js",
       "file": "@tensorflow_tfjs.js",
-      "fileHash": "14554476",
+      "fileHash": "c9c62284",
       "needsInterop": false
     },
     "@tensorflow/tfjs-backend-webgl": {
       "src": "../../../../../../node_modules/@tensorflow/tfjs-backend-webgl/dist/index.js",
       "file": "@tensorflow_tfjs-backend-webgl.js",
-      "fileHash": "bc17b621",
+      "fileHash": "4a692ad2",
       "needsInterop": false
     }
   },
   "chunks": {
+    "chunk-6PSVXF3U": {
+      "file": "chunk-6PSVXF3U.js"
+    },
     "chunk-HOZCUYRT": {
       "file": "chunk-HOZCUYRT.js"
+    },
+    "chunk-DZZSFJRK": {
+      "file": "chunk-DZZSFJRK.js"
     },
     "chunk-76Q4RDX2": {
       "file": "chunk-76Q4RDX2.js"
@@ -74,12 +80,6 @@
     },
     "chunk-AM2MHDDA": {
       "file": "chunk-AM2MHDDA.js"
-    },
-    "chunk-6PSVXF3U": {
-      "file": "chunk-6PSVXF3U.js"
-    },
-    "chunk-DZZSFJRK": {
-      "file": "chunk-DZZSFJRK.js"
     },
     "chunk-4MWRP73S": {
       "file": "chunk-4MWRP73S.js"

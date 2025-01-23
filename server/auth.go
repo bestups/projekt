@@ -13,6 +13,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	users, err := loadUsers() // Ładowanie użytkowników z pliku JSON
+	if err != nil {
+		http.Error(w, "Failed to load users", http.StatusInternalServerError)
+		return
+	}
+
 	for _, user := range users {
 		if user.Username == req.Username && user.Password == req.Password {
 			// Token zawierający userID

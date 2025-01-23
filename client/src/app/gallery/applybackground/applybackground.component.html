@@ -1,25 +1,31 @@
-<div class="background-selector">
-    <div class="background-list">
-      <img
-        *ngFor="let bg of availableBackgrounds"
-        [src]="bg"
-        alt="Background"
-        class="background-preview"
-        (click)="applyBackground(bg)"
-      />
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Kolumna lewa -->
+    <div class="col-md-6 position-relative d-flex flex-column justify-content-center align-items-center" style="height: 95vh;">
+<div class="tools position-absolute d-flex justify-content-between w-100" style="top: 0; z-index: 10; padding: 15px;">
+  <button class="btn text-white" [routerLink]="'/gallery'" style="background-color: #007bff;">Back to Gallery</button>
+  <button class="btn text-white" (click)="onSave()" style="background-color: #28a745;">Save Image</button>
+</div>
+
+      <div class="image-container position-relative" style="z-index: 1;">
+        <canvas #canvas class="w-90 h-90"></canvas>
+      </div>
+    </div>
+
+    <!-- Kolumna prawa -->
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center" style="height: 95vh;">
+      <h3 class="text-center mb-3">Wybierz tło</h3>
+      <div class="row w-100">
+        <div class="col-6 mb-3 d-flex justify-content-center align-items-center" *ngFor="let bg of availableBackgrounds">
+          <img
+            [src]="bg"
+            alt="Background"
+            class="background-image w-100 rounded"
+            style="max-height: 20vh; cursor: pointer;"
+            (click)="applyBackground(bg)"
+          />
+        </div>
+      </div>
     </div>
   </div>
-  
-  <div class="image-container">
-    <canvas #canvas></canvas>
-  </div>
-  
-  <div class="image-info">
-    <p><strong>Nazwa pliku:</strong> {{ imageFilename }}</p>
-    <p><strong>Token:</strong> {{ token }}</p>
-  </div>
-  
-  <div class="tools">
-    <button class="save-button" (click)="onSave()">Save Image</button>
-  </div>
-  
+</div>

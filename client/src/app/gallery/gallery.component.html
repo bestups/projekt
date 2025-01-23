@@ -1,32 +1,53 @@
-<!-- Gallery View -->
-<div *ngIf="!selectedImage">
-    <h1>Your Gallery</h1>
-  
-    <!-- Upload Section -->
-    <div class="upload-section">
-      <input type="file" (change)="onFileSelected($event)" />
-      <button (click)="onUpload()">Upload</button>
+<div class="container-fluid mt-4">
+  <!-- Jeśli nie wybrano żadnego zdjęcia -->
+  <div *ngIf="!selectedImage">
+    <!-- Upload and Logout Buttons in One Line -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex align-items-center">
+        <input type="file" class="form-control me-2" (change)="onFileSelected($event)" />
+        <button class="btn btn-primary" (click)="onUpload()">Upload</button>
+      </div>
+      <button class="btn logout-button" (click)="onLogout()">Logout</button>
     </div>
-  
-    <!-- Image Gallery -->
-    <div class="gallery">
-      <div *ngFor="let image of images" class="gallery-item">
-        <img [src]="image.url" [alt]="image.filename" />
-        <p>{{ image.filename }}</p>
-        <div class="actions">
-          <button (click)="onRename(image)">Rename</button>
-          <button (click)="onDelete(image)">Delete</button>
-          <button [routerLink]="['/edit']" [queryParams]="{ filename: image.filename, url: image.url }">Edit</button>
 
+    <!-- Gallery Grid -->
+    <div class="row">
+      <div
+        *ngFor="let image of images"
+        class="col-2 position-relative d-flex flex-column align-items-center"
+      >
+        <!-- Nazwa pliku nad zdjęciem -->
+        <div class="file-name position-absolute top-0 start-50 translate-middle-x">
+          <p class="text-center mb-0">{{ image.filename }}</p>
+        </div>
+
+        <!-- Obraz -->
+        <img
+          [src]="image.url"
+          [alt]="image.filename"
+          class="img-fluid rounded"
+          (click)="openImage(image)"
+        />
+
+        <!-- Przyciski pod zdjęciem -->
+        <div class="image-buttons position-absolute bottom-0 start-50 translate-middle-x d-flex gap-2">
+          <button class="btn btn-warning btn-sm" (click)="onRename(image)">Rename</button>
+          <button class="btn btn-danger btn-sm" (click)="onDelete(image)">Delete</button>
+          <button
+            class="btn btn-info btn-sm"
+            [routerLink]="['/edit']"
+            [queryParams]="{ filename: image.filename, url: image.url }"
+          >
+            Edit
+          </button>
         </div>
       </div>
     </div>
   </div>
-  
-  <!-- Detailed Image View -->
-  <div *ngIf="selectedImage" class="image-viewer">
-    <button (click)="closeImage()">Back to Gallery</button>
-    <h2>{{ selectedImage.filename }}</h2>
 
+  <!-- Jeśli wybrano zdjęcie -->
+  <div *ngIf="selectedImage" class="selected-image-container">
+    <button class="btn btn-secondary" (click)="closeImage()">Close</button>
+    <img [src]="selectedImage.url" [alt]="selectedImage.filename" class="img-fluid" />
   </div>
-  
+</div>

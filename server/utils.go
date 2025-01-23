@@ -277,3 +277,91 @@ func saveImageWithBackgroundHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(image)
 }
+
+func loadUsers() ([]User, error) {
+	file, err := os.Open("users.json")
+	if err != nil {
+		if os.IsNotExist(err) {
+			return []User{}, nil
+		}
+		return nil, err
+	}
+	defer file.Close()
+
+	var users []User
+	if err := json.NewDecoder(file).Decode(&users); err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
+func saveUsers(users []User) error {
+	file, err := os.Create("users.json")
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	return encoder.Encode(users)
+}
+
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+
+	var user User
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil || user.Username == "" || user.Password == "" {
+		http.Error(w, "Invalid input", http.StatusBadRequest)
+		return
+	}
+
+	// Wczytaj istniejących użytkowników
+	users, err := loadUsers()
+	if err != nil {
+		http.Error(w, "Error loading users", http.StatusInternalServerError)
+		return
+	}
+
+	// Sprawdź, czy użytkownik już istnieje
+	for _, u := range users {
+		if u.Username == user.Username {
+			http.Error(w, "Username already exists", http.StatusConflict)
+			return
+		}
+	}
+
+	// Generowanie unikalnego ID użytkownika
+	user.ID = fmt.Sprintf("user-%d", len(users)+1)
+
+	// Dodaj nowego użytkownika
+	users = append(users, user)
+	if err := saveUsers(users); err != nil {
+		http.Error(w, "Error saving user", http.StatusInternalServerError)
+		return
+	}
+
+	// Tworzenie folderu dla użytkownika
+	userDir := filepath.Join("uploads", user.ID)
+	if err := os.MkdirAll(userDir, os.ModePerm); err != nil {
+		http.Error(w, "Error creating user directory", http.StatusInternalServerError)
+		return
+	}
+
+	// Dodanie pustego wpisu do gallery.json
+	images, err := loadImages()
+	if err != nil {
+		http.Error(w, "Error loading gallery", http.StatusInternalServerError)
+		return
+	}
+	images[user.ID] = []Image{} // Pusty wpis dla użytkownika
+	if err := saveImages(images); err != nil {
+		http.Error(w, "Error saving gallery", http.StatusInternalServerError)
+		return
+	}
+
+	// Zwrot odpowiedzi sukcesu
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})
+}
