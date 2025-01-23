@@ -1,0 +1,106 @@
+{
+  "user-1": [
+    {
+      "filename": "DSC_5537.jpg",
+      "url": "http://localhost:8000/uploads/user-1/DSC_5537.jpg",
+      "userId": "user-1"
+    },
+    {
+      "filename": "7P5A9948.jpg",
+      "url": "http://localhost:8000/uploads/user-1/7P5A9948.jpg",
+      "userId": "user-1"
+    },
+    {
+      "filename": "7P5A9979.jpg",
+      "url": "http://localhost:8000/uploads/user-1/7P5A9979.jpg",
+      "userId": "user-1"
+    },
+    {
+      "filename": "DSC_5835.jpg",
+      "url": "http://localhost:8000/uploads/user-1/DSC_5835.jpg",
+      "userId": "user-1"
+    },
+    {
+      "filename": "masked_DSC_5835.jpg",
+      "url": "http://localhost:8000/uploads/user-1/masked_DSC_5835.jpg",
+      "userId": "user-1"
+    },
+    {
+      "filename": "edited_DSC_5835.jpg",
+      "url": "http://localhost:8000/uploads/user-1/edited_DSC_5835.jpg",
+      "userId": "user-1"
+    }
+  ],
+  "user-2": [
+    {
+      "filename": "DSC_1129.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_1129.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_4733.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_4733.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_6478.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_6478.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_7501.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_7501.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_8286.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_8286.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_9154.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_9154.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_9156.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_9156.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "DSC_5537.jpg",
+      "url": "http://localhost:8000/uploads/user-2/DSC_5537.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "_P5A0129.jpg",
+      "url": "http://localhost:8000/uploads/user-2/_P5A0129.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "7P5A9935.jpg",
+      "url": "http://localhost:8000/uploads/user-2/7P5A9935.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "masked_DSC_9156.jpg",
+      "url": "http://localhost:8000/uploads/user-2/masked_DSC_9156.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "edited_DSC_9156.jpg",
+      "url": "http://localhost:8000/uploads/user-2/edited_DSC_9156.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "edited_DSC_1129.jpg",
+      "url": "http://localhost:8000/uploads/user-2/edited_DSC_1129.jpg",
+      "userId": "user-2"
+    },
+    {
+      "filename": "edited_DSC_7501.jpg",
+      "url": "http://localhost:8000/uploads/user-2/edited_DSC_7501.jpg",
+      "userId": "user-2"
+    }
+  ]
+}

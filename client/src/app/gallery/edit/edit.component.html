@@ -1,0 +1,40 @@
+<div class="header">
+    <button
+      class="back-button"
+      [routerLink]="'/gallery'"
+      [ngStyle]="{ left: backButtonPosition.left + 'px' }"
+    >
+      Back to Gallery
+    </button>
+    <h1
+      class="file-name"
+      [ngStyle]="{ right: fileNamePosition.right + 'px' }"
+    >
+      Image: {{ imageFilename }}
+    </h1>
+  </div>
+  
+  <div class="image-container">
+    <canvas #canvas></canvas>
+  </div>
+  
+  <div class="tools">
+    <button
+      class="apply-mask-btn"
+      [disabled]="!imageUrl || !ctx || maskApplied"
+      (click)="applyBodyPix()"
+    >
+      Apply AI Mask
+    </button>
+    <button
+      class="apply-mask-btn"
+      [disabled]="!maskApplied"
+      (click)="onSave()"
+    >
+      Save Edited Image
+    </button>
+    <button 
+    class="apply-mask-btn"
+    [disabled]="!maskApplied"
+    (click)="navigateToApplyBackground()">Go to Apply Background</button>
+  </div>

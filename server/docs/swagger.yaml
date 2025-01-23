@@ -1,0 +1,392 @@
+basePath: /api
+definitions:
+  main.DeleteRequest:
+    properties:
+      filename:
+        description: File name to delete
+        type: string
+    type: object
+  main.Image:
+    description: Struktura przechowuje informacje o nazwie pliku, URL oraz ID użytkownika,
+      do którego należy obraz.
+    properties:
+      filename:
+        description: Nazwa pliku obrazu.
+        type: string
+      url:
+        description: URL obrazu.
+        type: string
+      userId:
+        description: ID użytkownika, do którego należy obraz.
+        type: string
+    type: object
+  main.LoginRequest:
+    description: Struktura zawiera nazwę użytkownika i hasło przesyłane w żądaniu.
+    properties:
+      password:
+        description: Hasło użytkownika.
+        type: string
+      username:
+        description: Nazwa użytkownika.
+        type: string
+    type: object
+  main.LoginResponse:
+    description: Struktura zwraca informacje o wyniku logowania, w tym status sukcesu,
+      wiadomość i token.
+    properties:
+      message:
+        description: Wiadomość opisująca wynik logowania.
+        type: string
+      success:
+        description: Status sukcesu logowania.
+        type: boolean
+      token:
+        description: Token autoryzacyjny, opcjonalny.
+        type: string
+    type: object
+  main.RenameRequest:
+    properties:
+      filename:
+        description: Original file name
+        type: string
+      newName:
+        description: New file name
+        type: string
+    type: object
+  main.User:
+    description: Struktura przechowuje dane użytkownika, w tym jego ID, nazwę użytkownika
+      i hasło.
+    properties:
+      id:
+        description: ID użytkownika, opcjonalne.
+        type: string
+      password:
+        description: Hasło użytkownika.
+        type: string
+      username:
+        description: Nazwa użytkownika.
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API do zarządzania plikami i obrazami użytkowników, w tym przesyłanie,
+    edytowanie oraz rejestrowanie użytkowników.
+  title: File Management API
+  version: "1.0"
+paths:
+  /api/backgrounds:
+    get:
+      description: Funkcja zwraca listę plików tła znajdujących się w katalogu `uploads/background`.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista plików teł
+          schema:
+            items:
+              type: string
+            type: array
+        "500":
+          description: Błąd wewnętrzny serwera
+          schema:
+            type: string
+      summary: Pobiera listę dostępnych teł.
+      tags:
+      - Backgrounds
+  /api/register:
+    post:
+      consumes:
+      - application/json
+      description: Funkcja umożliwia rejestrację użytkownika, tworzy dla niego katalog
+        oraz aktualizuje dane w galerii obrazów.
+      parameters:
+      - description: Dane użytkownika
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Użytkownik został pomyślnie utworzony
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Nieprawidłowe dane wejściowe
+          schema:
+            type: string
+        "409":
+          description: Użytkownik o podanej nazwie już istnieje
+          schema:
+            type: string
+        "500":
+          description: Błąd wewnętrzny serwera
+          schema:
+            type: string
+      summary: Rejestruje nowego użytkownika.
+      tags:
+      - Users
+  /api/save-image-with-background:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Funkcja zapisuje edytowany obraz z tłem w katalogu użytkownika
+        i aktualizuje dane galerii obrazów.
+      parameters:
+      - description: Plik obrazu do zapisania
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Informacje o zapisanym obrazie
+          schema:
+            $ref: '#/definitions/main.Image'
+        "400":
+          description: Błąd parsowania danych formularza
+          schema:
+            type: string
+        "401":
+          description: Brak autoryzacji
+          schema:
+            type: string
+        "500":
+          description: Błąd wewnętrzny serwera
+          schema:
+            type: string
+      summary: Zapisuje obraz z zastosowanym tłem.
+      tags:
+      - Backgrounds
+  /api/users:
+    get:
+      description: Funkcja odczytuje listę użytkowników z pliku `users.json`.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista użytkowników
+          schema:
+            items:
+              $ref: '#/definitions/main.User'
+            type: array
+        "500":
+          description: Błąd wewnętrzny serwera
+          schema:
+            type: string
+      summary: Ładuje listę użytkowników.
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Funkcja zapisuje zaktualizowaną listę użytkowników do pliku `users.json`.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Użytkownicy zapisani pomyślnie
+          schema:
+            type: string
+        "500":
+          description: Błąd wewnętrzny serwera
+          schema:
+            type: string
+      summary: Zapisuje listę użytkowników.
+      tags:
+      - Users
+  /delete:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint umożliwia usunięcie pliku obrazu przesłanego przez użytkownika.
+      parameters:
+      - description: Nazwa pliku do usunięcia
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.DeleteRequest'
+      responses:
+        "200":
+          description: Plik został pomyślnie usunięty
+          schema:
+            type: string
+        "400":
+          description: Nieprawidłowe dane
+          schema:
+            type: string
+        "401":
+          description: Brak autoryzacji
+          schema:
+            type: string
+        "500":
+          description: Błąd usuwania pliku
+          schema:
+            type: string
+      summary: Usuwa plik.
+      tags:
+      - Files
+  /edit:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Endpoint umożliwia przesłanie edytowanego obrazu przez użytkownika,
+        zapisując go na serwerze w katalogu użytkownika.
+      parameters:
+      - description: Edytowany obraz
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Obraz został pomyślnie zapisany
+          schema:
+            type: string
+        "400":
+          description: Błąd parsowania danych formularza
+          schema:
+            type: string
+        "401":
+          description: Brak autoryzacji
+          schema:
+            type: string
+        "500":
+          description: Błąd zapisywania pliku
+          schema:
+            type: string
+      summary: Edytuje obraz przesłany przez użytkownika.
+      tags:
+      - Files
+  /images:
+    get:
+      description: Endpoint zwraca wszystkie obrazy przesłane przez użytkownika.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista obrazów
+          schema:
+            items:
+              $ref: '#/definitions/main.Image'
+            type: array
+        "401":
+          description: Brak autoryzacji
+          schema:
+            type: string
+      summary: Pobiera listę obrazów użytkownika.
+      tags:
+      - Files
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint umożliwia logowanie użytkownika na podstawie nazwy użytkownika
+        i hasła. Zwraca token autoryzacyjny w przypadku powodzenia.
+      parameters:
+      - description: Dane logowania użytkownika
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Sukces logowania z tokenem
+          schema:
+            $ref: '#/definitions/main.LoginResponse'
+        "400":
+          description: Nieprawidłowe dane wejściowe
+          schema:
+            type: string
+        "401":
+          description: Nieprawidłowa nazwa użytkownika lub hasło
+          schema:
+            type: string
+        "500":
+          description: Błąd serwera podczas ładowania użytkowników
+          schema:
+            type: string
+      summary: Logowanie użytkownika.
+      tags:
+      - Auth
+  /rename:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint umożliwia zmianę nazwy przesłanego pliku obrazu.
+      parameters:
+      - description: Nowa nazwa pliku
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.RenameRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Nazwa pliku została pomyślnie zmieniona
+          schema:
+            type: string
+        "400":
+          description: Nieprawidłowe dane
+          schema:
+            type: string
+        "401":
+          description: Brak autoryzacji
+          schema:
+            type: string
+        "500":
+          description: Błąd serwera
+          schema:
+            type: string
+      summary: Zmienia nazwę pliku.
+      tags:
+      - Files
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Endpoint umożliwia przesłanie pliku obrazu przez użytkownika.
+      parameters:
+      - description: Plik obrazu
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Informacje o przesłanym obrazie
+          schema:
+            $ref: '#/definitions/main.Image'
+        "400":
+          description: Błąd przesyłania pliku
+          schema:
+            type: string
+        "401":
+          description: Brak autoryzacji
+          schema:
+            type: string
+        "500":
+          description: Błąd zapisu pliku
+          schema:
+            type: string
+      summary: Przesyłanie plików.
+      tags:
+      - Files
+swagger: "2.0"

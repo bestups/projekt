@@ -1,0 +1,169 @@
+.container-fluid {
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+
+.row {
+  margin: 0;
+  gap: 0;
+}
+
+.col-6,
+.col-md-4,
+.col-lg-3 {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  gap: 0;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  border: 0px solid #ccc;
+  border-radius: 0.0rem;
+}
+
+.file-name {
+  z-index: 10; /* Nad zdjęciem */
+  background-color: rgba(0, 0, 0, 0.8); /* Czarny półprzezroczysty box */
+  color: white;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 0.25rem 0.25rem 0 0; /* Zaokrąglone górne rogi */
+  margin-top: 2px;
+}
+
+.image-buttons {
+  z-index: 10; /* Wyświetlenie nad zdjęciem */
+  background-color: rgba(0, 0, 0, 0.6); /* Czarny półprzezroczysty box */
+  padding: 5px;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+button {
+  border: none; /* Brak obramowania */
+  padding: 10px 20px; /* Standardowe wymiary przycisków */
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button.btn-primary {
+  background-color: #007bff; /* Niebieski dla Upload */
+  color: white;
+}
+
+button.btn-primary:hover {
+  background-color: #0056b3; /* Ciemniejszy niebieski przy hover */
+}
+
+button.logout-button {
+  background-color: #dc3545; /* Czerwony dla Logout */
+  color: white;
+  padding: 10px 30px;
+  margin-right: 10px;
+}
+
+button.logout-button:hover {
+  background-color: #b02a37; /* Ciemniejszy czerwony przy hover */
+}
+
+button.btn-warning {
+  background-color: #ffc107; /* Żółty dla Rename */
+  color: black;
+  font-size: 12px;
+  padding: 6px 10px; /* Mniejsze wymiary */
+}
+
+button.btn-warning:hover {
+  background-color: #e0a800; /* Ciemniejszy żółty przy hover */
+}
+
+button.btn-danger {
+  background-color: #dc3545; /* Czerwony dla Delete */
+  color: white;
+  font-size: 12px;
+  padding: 6px 10px; /* Mniejsze wymiary */
+}
+
+button.btn-danger:hover {
+  background-color: #b02a37; /* Ciemniejszy czerwony przy hover */
+}
+
+button.btn-info {
+  background-color: #17a2b8; /* Niebieski dla Edit */
+  color: white;
+  font-size: 16px; /* Większy font dla ważniejszego przycisku */
+  padding: 10px 16px; /* Większe wymiary dla wyróżnienia */
+  font-weight: bold; /* Pogrubienie tekstu */
+}
+
+button.btn-info:hover {
+  background-color: #117a8b; /* Ciemniejszy niebieski przy hover */
+}
+
+canvas {
+  border: 1px solid #ccc;
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0rem;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+.row {
+  margin: 0;
+  gap: 0px; /* Zmniejszone odstępy między zdjęciami */
+}
+
+.col-2 {
+  padding: 2px; /* Minimalne odstępy między kolumnami */
+  position: relative;
+  overflow: hidden;
+}
+
+.selected-image-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.selected-image-container img {
+  max-width: 90%;
+  max-height: 90vh;
+}

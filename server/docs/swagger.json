@@ -1,0 +1,577 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API do zarządzania plikami i obrazami użytkowników, w tym przesyłanie, edytowanie oraz rejestrowanie użytkowników.",
+        "title": "File Management API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/api",
+    "paths": {
+        "/api/backgrounds": {
+            "get": {
+                "description": "Funkcja zwraca listę plików tła znajdujących się w katalogu `uploads/background`.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Backgrounds"
+                ],
+                "summary": "Pobiera listę dostępnych teł.",
+                "responses": {
+                    "200": {
+                        "description": "Lista plików teł",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "description": "Funkcja umożliwia rejestrację użytkownika, tworzy dla niego katalog oraz aktualizuje dane w galerii obrazów.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Rejestruje nowego użytkownika.",
+                "parameters": [
+                    {
+                        "description": "Dane użytkownika",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Użytkownik został pomyślnie utworzony",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nieprawidłowe dane wejściowe",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Użytkownik o podanej nazwie już istnieje",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/save-image-with-background": {
+            "post": {
+                "description": "Funkcja zapisuje edytowany obraz z tłem w katalogu użytkownika i aktualizuje dane galerii obrazów.",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Backgrounds"
+                ],
+                "summary": "Zapisuje obraz z zastosowanym tłem.",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Plik obrazu do zapisania",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Informacje o zapisanym obrazie",
+                        "schema": {
+                            "$ref": "#/definitions/main.Image"
+                        }
+                    },
+                    "400": {
+                        "description": "Błąd parsowania danych formularza",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Brak autoryzacji",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "description": "Funkcja odczytuje listę użytkowników z pliku `users.json`.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Ładuje listę użytkowników.",
+                "responses": {
+                    "200": {
+                        "description": "Lista użytkowników",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.User"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Funkcja zapisuje zaktualizowaną listę użytkowników do pliku `users.json`.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Zapisuje listę użytkowników.",
+                "responses": {
+                    "200": {
+                        "description": "Użytkownicy zapisani pomyślnie",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd wewnętrzny serwera",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/delete": {
+            "post": {
+                "description": "Endpoint umożliwia usunięcie pliku obrazu przesłanego przez użytkownika.",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Usuwa plik.",
+                "parameters": [
+                    {
+                        "description": "Nazwa pliku do usunięcia",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.DeleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plik został pomyślnie usunięty",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Nieprawidłowe dane",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Brak autoryzacji",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd usuwania pliku",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/edit": {
+            "post": {
+                "description": "Endpoint umożliwia przesłanie edytowanego obrazu przez użytkownika, zapisując go na serwerze w katalogu użytkownika.",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Edytuje obraz przesłany przez użytkownika.",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Edytowany obraz",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obraz został pomyślnie zapisany",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Błąd parsowania danych formularza",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Brak autoryzacji",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd zapisywania pliku",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/images": {
+            "get": {
+                "description": "Endpoint zwraca wszystkie obrazy przesłane przez użytkownika.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Pobiera listę obrazów użytkownika.",
+                "responses": {
+                    "200": {
+                        "description": "Lista obrazów",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Image"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Brak autoryzacji",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Endpoint umożliwia logowanie użytkownika na podstawie nazwy użytkownika i hasła. Zwraca token autoryzacyjny w przypadku powodzenia.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logowanie użytkownika.",
+                "parameters": [
+                    {
+                        "description": "Dane logowania użytkownika",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces logowania z tokenem",
+                        "schema": {
+                            "$ref": "#/definitions/main.LoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Nieprawidłowe dane wejściowe",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Nieprawidłowa nazwa użytkownika lub hasło",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd serwera podczas ładowania użytkowników",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/rename": {
+            "post": {
+                "description": "Endpoint umożliwia zmianę nazwy przesłanego pliku obrazu.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Zmienia nazwę pliku.",
+                "parameters": [
+                    {
+                        "description": "Nowa nazwa pliku",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.RenameRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nazwa pliku została pomyślnie zmieniona",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Nieprawidłowe dane",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Brak autoryzacji",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd serwera",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload": {
+            "post": {
+                "description": "Endpoint umożliwia przesłanie pliku obrazu przez użytkownika.",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Przesyłanie plików.",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Plik obrazu",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Informacje o przesłanym obrazie",
+                        "schema": {
+                            "$ref": "#/definitions/main.Image"
+                        }
+                    },
+                    "400": {
+                        "description": "Błąd przesyłania pliku",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Brak autoryzacji",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Błąd zapisu pliku",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.DeleteRequest": {
+            "type": "object",
+            "properties": {
+                "filename": {
+                    "description": "File name to delete",
+                    "type": "string"
+                }
+            }
+        },
+        "main.Image": {
+            "description": "Struktura przechowuje informacje o nazwie pliku, URL oraz ID użytkownika, do którego należy obraz.",
+            "type": "object",
+            "properties": {
+                "filename": {
+                    "description": "Nazwa pliku obrazu.",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "URL obrazu.",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "ID użytkownika, do którego należy obraz.",
+                    "type": "string"
+                }
+            }
+        },
+        "main.LoginRequest": {
+            "description": "Struktura zawiera nazwę użytkownika i hasło przesyłane w żądaniu.",
+            "type": "object",
+            "properties": {
+                "password": {
+                    "description": "Hasło użytkownika.",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Nazwa użytkownika.",
+                    "type": "string"
+                }
+            }
+        },
+        "main.LoginResponse": {
+            "description": "Struktura zwraca informacje o wyniku logowania, w tym status sukcesu, wiadomość i token.",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "description": "Wiadomość opisująca wynik logowania.",
+                    "type": "string"
+                },
+                "success": {
+                    "description": "Status sukcesu logowania.",
+                    "type": "boolean"
+                },
+                "token": {
+                    "description": "Token autoryzacyjny, opcjonalny.",
+                    "type": "string"
+                }
+            }
+        },
+        "main.RenameRequest": {
+            "type": "object",
+            "properties": {
+                "filename": {
+                    "description": "Original file name",
+                    "type": "string"
+                },
+                "newName": {
+                    "description": "New file name",
+                    "type": "string"
+                }
+            }
+        },
+        "main.User": {
+            "description": "Struktura przechowuje dane użytkownika, w tym jego ID, nazwę użytkownika i hasło.",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "ID użytkownika, opcjonalne.",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Hasło użytkownika.",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Nazwa użytkownika.",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
