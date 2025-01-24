@@ -4,63 +4,58 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Ścieżki do folderów z plikami serwera i przeglądarki
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+// Przykładowe API
+app.get('/api/example', (req: Request, res: Response) => {
+  res.json({ message: 'Example API response' });
+});
 
-/**
- * Serve static files from /browser
- */
+// Serwowanie plików statycznych z folderu przeglądarki
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
     index: false,
     redirect: false,
-  }),
+  })
 );
 
-/**
- * Handle all other requests by rendering the Angular application.
- */
-app.use('/**', (req, res, next) => {
-  angularApp
-    .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
-    .catch(next);
+// Obsługa Angular Universal dla wszystkich innych ścieżek
+app.use('/**', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const response = await angularApp.handle(req);
+    if (response) {
+      writeResponseToNodeResponse(response, res);
+    } else {
+      next();
+    }
+  } catch (err) {
+    next(err);
+  }
 });
 
-/**
- * Start the server if this module is the main entry point.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
+// Middleware do obsługi błędów
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error('Error during request:', err);
+  res.status(500).send('Internal Server Error');
+});
+
+// Uruchamianie serwera
+const port = process.env['PORT'] || 4000; // Definicja zmiennej port
 if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
   app.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
 
-/**
- * The request handler used by the Angular CLI (dev-server and during build).
- */
+// Eksport dla Angular CLI
 export const reqHandler = createNodeRequestHandler(app);

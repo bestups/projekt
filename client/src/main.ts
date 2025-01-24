@@ -7,10 +7,13 @@ import { GalleryComponent } from './app/gallery/gallery.component';
 import { EditComponent } from './app/gallery/edit/edit.component';
 import { ApplybackgroundComponent } from './app/gallery/applybackground/applybackground.component';
 import { RegisterComponent } from './app/auth/register/register.component';
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, isPlatformServer } from '@angular/common';
+import { PLATFORM_ID, inject } from '@angular/core';
 
 // Sprawdzenie środowiska (produkcja/deweloperskie)
-const baseHref = document.getElementsByTagName('base')[0]?.getAttribute('href') || '/';
+const baseHref = typeof window !== 'undefined'
+  ? document.getElementsByTagName('base')[0]?.getAttribute('href') || '/'
+  : '/';
 
 /**
  * Application routes configuration.
@@ -34,5 +37,6 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideHttpClient(),
     { provide: APP_BASE_HREF, useValue: baseHref }, // Użycie dynamicznego baseHref
+    { provide: PLATFORM_ID, useFactory: () => (typeof window === 'undefined' ? 'server' : 'browser') }, // Rozróżnienie SSR i przeglądarki
   ],
 }).catch((err) => console.error(err));

@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/client/server",
+    "target": "es2022", // Zmiana na es2022 dla zgodności z nowoczesnym Angular SSR
+    "module": "es2022", // Wymagane dla nowoczesnych modułów i opcji bundlera
+    "types": ["node"]
+  },
+  "files": ["src/main.server.ts"], // Plik wejściowy dla serwera
+  "angularCompilerOptions": {
+    "entryModule": "./src/main.ts", // Odniesienie do głównego punktu wejściowego aplikacji
+    "bundler": true // Włączenie bundlera dla serwera
+  }
+}
