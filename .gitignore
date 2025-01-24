@@ -1,5 +1,5 @@
 # Ignore Angular cache
-client/.angular/cache/
+./client/.angular/cache/
 
 # Node modules
-client/node_modules/
+./client/node_modules/
