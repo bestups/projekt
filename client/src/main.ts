@@ -9,73 +9,30 @@ import { ApplybackgroundComponent } from './app/gallery/applybackground/applybac
 import { RegisterComponent } from './app/auth/register/register.component';
 import { APP_BASE_HREF } from '@angular/common';
 
+// Sprawdzenie środowiska (produkcja/deweloperskie)
+const baseHref = document.getElementsByTagName('base')[0]?.getAttribute('href') || '/';
+
 /**
  * Application routes configuration.
  * Defines the routes used in the application and the corresponding components.
  */
 const routes: Routes = [
-  /**
-   * Route for the login page.
-   * URL: `/login`
-   * Component: `LoginComponent`
-   */
   { path: 'login', component: LoginComponent },
-
-  /**
-   * Default route (root).
-   * Redirects to the login page (`/login`).
-   */
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-
-  /**
-   * Route for the gallery page.
-   * URL: `/gallery`
-   * Component: `GalleryComponent`
-   */
   { path: 'gallery', component: GalleryComponent },
-
-  /**
-   * Route for the edit page.
-   * URL: `/edit`
-   * Component: `EditComponent`
-   */
   { path: 'edit', component: EditComponent },
-
-  /**
-   * Route for the apply background page.
-   * URL: `/applybackground`
-   * Component: `ApplybackgroundComponent`
-   */
   { path: 'applybackground', component: ApplybackgroundComponent },
-
-  /**
-   * Route for the registration page.
-   * URL: `/register`
-   * Component: `RegisterComponent`
-   */
   { path: 'register', component: RegisterComponent },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Obsługa błędnych ścieżek
 ];
 
 /**
  * Bootstrap the Angular application.
- * This initializes the application with the root component `AppComponent` and provides necessary services.
  */
 bootstrapApplication(AppComponent, {
   providers: [
-    /**
-     * Provides router configuration for the application.
-     */
     provideRouter(routes),
-
-    /**
-     * Provides HTTP client for making HTTP requests.
-     */
     provideHttpClient(),
-
-    /**
-     * Sets the base href for the application.
-     * Default value is `/`.
-     */
-    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: APP_BASE_HREF, useValue: baseHref }, // Użycie dynamicznego baseHref
   ],
 }).catch((err) => console.error(err));
